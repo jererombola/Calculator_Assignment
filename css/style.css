@@ -1,0 +1,33 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#calculator{
+    background-color: #a7a7ae;
+    border: black solid 3px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: 1vw 30vw;
+    padding-bottom: 1vw;
+    flex-wrap: wrap;
+}
+#number{
+    width: 70vw;
+    height: 8vw;
+    margin: 1vw 2vw;
+    background-color: rgb(116, 156, 133);
+    font-size: 50px;
+    text-align:center;
+}
+
+button{
+    width: 8vw;
+    height: 8vw;
+    font-size: larger;    
+}
+#zero{
+    width: 16vw;
+}
