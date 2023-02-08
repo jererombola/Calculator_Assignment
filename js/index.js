@@ -14,13 +14,35 @@ buttons.forEach(buttons=>{
             screenValue = screenValue.slice(0,-1)
             screen.value = screenValue
         }
+        else if(buttonText == "=" && screenValue.indexOf("/0") != -1){
+            console.log(screenValue.indexOf("/0"));
+            screenValue = "Oh no! That's not possible!"
+            screen.value = screenValue
+            screen.style.fontSize = "40px"
+        }      
         else if(buttonText == "="){
             screen.value = eval(screenValue)
             screenValue = screen.value
         }
+        else if(buttonText == "+/-"){
+            screen.value = eval(screenValue * -1)
+            screenValue = screen.value
+        }
+        
+        else if(buttonText == "." && screenValue.indexOf(".") != -1){
+            screen.value = screenValue;
+        }
+        else if(buttonText == "=" && screenValue.indexOf("/0") != -1){
+            console.log(screenValue.indexOf("/0"));
+            screenValue = "You can't Divide by Zero"
+            screen.value = screenValue
+        }        
         else{
             screenValue += buttonText;
             screen.value = screenValue;
+            console.log(screen.value);
+            screen.style.fontSize = "48px"
+
         }
     })
 

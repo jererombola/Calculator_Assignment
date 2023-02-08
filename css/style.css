@@ -16,9 +16,10 @@
 }
 #answer{
     width: 35vw;
+    height: 10vw;
     margin: 1vw 2vw;
     background-color: rgb(116, 156, 133);
-    font-size: 50px;
+    font-size: 48px;
     text-align:center;
 }
 
