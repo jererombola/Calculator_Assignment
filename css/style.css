@@ -1,66 +1,74 @@
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-#calculator{
-    background-color: #a7a7ae;
-    border: black solid 3px;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin: 1vw 10vw;
-    padding-bottom: 5vw;
-    flex-wrap: wrap;
+#calculator {
+  background-color: #a7a7ae;
+  border: black solid 3px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 1vw 10vw;
+  padding-bottom: 5vw;
+  flex-wrap: wrap;
 }
 
-#answer{
-    width: 72vw;
-    height: 20vw;
-    margin: 1vw 2vw;
-    background-color: rgb(57, 56, 56);
-    font-size: 48px;
-    border-radius: 20px;
-    text-align:center;
-    color: white;
-    font-weight: bolder;
+#answer {
+  width: 72vw;
+  height: 20vw;
+  margin: 1vw 2vw;
+  background-color: rgb(57, 56, 56);
+  font-size: 48px;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  font-weight: bolder;
 }
 
-button{
-    width: 18vw;
-    height: 18vw;
-    font-size: smaller;   
-    background-color: rgb(57, 56, 56);
-    color: white;
-    border-radius: 13px ;
-    font-weight: bold;
+button {
+  cursor: pointer;
+  width: 18vw;
+  height: 18vw;
+  font-size: smaller;
+  background-color: rgb(57, 56, 56);
+  color: white;
+  border-radius: 13px;
+  font-weight: bold;
 }
 
-.operators{
-    background-color: rgb(215, 129, 0);
+.operators {
+  background-color: rgb(215, 129, 0);
 }
 
-.front{
-    background-color: rgb(188, 185, 185);
-    color: black;
+.front {
+  background-color: rgb(188, 185, 185);
+  color: black;
+}
+
+button:active {
+  border: 1px solid white;
+  background-color: rgb(165, 165, 165);
+  transform: scale(0.85);
+  box-shadow: 3px 2px 25px 1px rgba(0, 0, 0, 0.25);
 }
 
 @media screen and (min-width: 768px) {
-    button{
-        width: 8vw;
-        height: 8vw;
-        font-size: larger;    
-    }
+  button {
+    width: 8vw;
+    height: 8vw;
+    font-size: larger;
+  }
 
-    #calculator{
-        margin: 1vw 30vw;
-        padding-bottom: 1vw;
-    }
+  #calculator {
+    margin: 1vw 30vw;
+    padding-bottom: 1vw;
+  }
 
-    #answer{
-        width: 35vw;
-        height: 10vw;
-    }
-    
+  #answer {
+    width: 35vw;
+    height: 10vw;
+  }
 }
