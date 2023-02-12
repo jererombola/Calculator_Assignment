@@ -27,9 +27,6 @@ function operate() {
   }
 }
 
-function resetOperator(){
-  
-}
 function prepareCalc(buttonPress, screenValue) {
   if (operator === '' || screen.value === '') {
     operator = buttonPress;
@@ -37,7 +34,7 @@ function prepareCalc(buttonPress, screenValue) {
   else {
     operand2 = screen.value;
     let total = operate();
-    screen.value = total.toString().slice(0, 6);
+    screen.value = (Number.isInteger(total)) ? total : total.toFixed(6)
     screenValue = total;
     operand1 = screenValue;
     operand2 = 0;
@@ -74,7 +71,7 @@ function takeInput(input) {
       } else {
         operand2 = screen.value;
         let total = operate();
-        screen.value = total.toString().slice(0, 6);
+        screen.value = (Number.isInteger(total)) ? total : total.toFixed(6)
         operand1 = total;
         operand2 = 0;
         operator = '';
@@ -86,7 +83,7 @@ function takeInput(input) {
       } else {
         operand2 = screen.value;
         let total = operate();
-        screen.value = total.toString().slice(0, 6);
+        screen.value = (Number.isInteger(total)) ? total : total.toFixed(6)
         operand1 = total;
         operand2 = 0;
         operator = '';
