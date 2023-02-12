@@ -75,12 +75,10 @@ function takeInput(input) {
       screen.value = '';
       break;
     case 'Back':
-        screenValue = screenValue.slice(0,-1)
-        screen.value = screenValue
+        screen.value = screen.value.slice(0, -1);
       break;
     case 'Backspace':
-        screenValue = screenValue.slice(0,-1)
-        screen.value = screenValue
+        screen.value = screen.value.slice(0, -1);
       break;
     case '=':
       if (screen.value === "0") {
@@ -131,7 +129,8 @@ function takeInput(input) {
       break;
     default: {
         if (screen.value == operand1 && screen.value != '') {
-            screen.value = input;
+            screenValue = input;
+            screen.value = ScreenValue
         } else {
             screen.value = screen.value + input;
           }
