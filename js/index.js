@@ -1,7 +1,6 @@
 let calculator = document.getElementById('calculator');
 let buttons = Array.from(document.querySelectorAll('button'));
 let screen = document.getElementById('answer');
-let screenValue = '';
 let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 let operators = ['+', '-', '/', '*', '%', 'Backspace','Enter', 'Escape'];
 let operand1 = 0;
@@ -12,8 +11,6 @@ const addition = (operand1, operand2) => +operand1 + +operand2;
 const subtraction = (operand1, operand2) => operand1 - operand2;
 const multiplication = (operand1, operand2) => operand1 * operand2;
 const division = (operand1, operand2) => operand1 / operand2;
-const percentage = (operand1) => operand1 / 100;
-const minusMax = (operand1) => operand1 * -1;
 
 function operate() {
   switch (operator) {
@@ -25,16 +22,13 @@ function operate() {
       return addition(operand1, operand2);
     case '-':
       return subtraction(operand1, operand2);
-    case '%':
-      return percentage(operand1);
-    case '+/-':
-      return minusMax(operand1);
-    default:
+      default:
       break;
   }
 }
 
 function prepareCalc(buttonPress, screenValue) {
+    
   if (operator === '') {
     operator = buttonPress;
   } else {
@@ -52,14 +46,6 @@ function prepareCalc(buttonPress, screenValue) {
   }
 }
 
-buttons.forEach((button) => {
-  button.addEventListener('click', function (event) {
-    event.preventDefault();
-    takeInput(event.target.innerText);
-    
-  });
-});
-
 function takeInput(input) {
   switch (input) {
     case 'A/C':
@@ -68,7 +54,7 @@ function takeInput(input) {
       operator = '';
       screen.value = '';
       break;
-      case 'Escape':
+    case 'Escape':
       operand1 = 0;
       operand2 = 0;
       operator = '';
@@ -110,33 +96,39 @@ function takeInput(input) {
       }
       break;
     case '+/-':
-      screen.value = operate();
-      break;
+        screen.value = screen.value * (-1);
+        break;
     case '%':
-      screen.value = operate();
-      break;
+        screen.value = screen.value / 100;
+        break;
     case '/':
-      prepareCalc(input, screen.value);
-      break;
+        prepareCalc(input, screen.value);
+        break;
     case '*':
-      prepareCalc(input, screen.value);
-      break;
+        prepareCalc(input, screen.value);
+        break;
     case '-':
-      prepareCalc(input, screen.value);
-      break;
+        prepareCalc(input, screen.value);
+        break;
     case '+':
-      prepareCalc(input, screen.value);
-      break;
+        prepareCalc(input, screen.value);
+        break;
     default: {
         if (screen.value == operand1 && screen.value != '') {
-            screenValue = input;
-            screen.value = ScreenValue
+          screen.value = input;
         } else {
-            screen.value = screen.value + input;
-          }
+          screen.value = screen.value + input;
+        }
     }
   }
 }
+buttons.forEach((button) => {
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      let buttonPress = event.target.innerText
+      takeInput(buttonPress);
+    });
+  });
 
 buttons.forEach((keys) => {
   keys.addEventListener('keydown', function (event) {
