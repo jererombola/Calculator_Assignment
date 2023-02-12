@@ -3,7 +3,7 @@ let buttons = Array.from(document.querySelectorAll('button'));
 let screen = document.getElementById('answer');
 let screenValue = '';
 let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-let operators = ['+', '-', '/', '*', '%'];
+let operators = ['+', '-', '/', '*', '%', 'Backspace','Enter', 'Escape'];
 let operand1 = 0;
 let operand2 = 0;
 let operator = '';
@@ -56,6 +56,7 @@ buttons.forEach((button) => {
   button.addEventListener('click', function (event) {
     event.preventDefault();
     takeInput(event.target.innerText);
+    
   });
 });
 
@@ -67,14 +68,34 @@ function takeInput(input) {
       operator = '';
       screen.value = '';
       break;
+      case 'Escape':
+      operand1 = 0;
+      operand2 = 0;
+      operator = '';
+      screen.value = '';
+      break;
     case 'Back':
-      screen.value = screen.value.slice(0, -1);
+        screenValue = screenValue.slice(0,-1)
+        screen.value = screenValue
       break;
     case 'Backspace':
-      screen.value = screen.value.slice(0, -1);
+        screenValue = screenValue.slice(0,-1)
+        screen.value = screenValue
       break;
     case '=':
-      if (screen.value.indexOf('/0') != -1) {
+      if (screen.value === "0") {
+        screen.value = 'ERR0R!!!';
+      } else {
+        operand2 = screen.value;
+        let total = operate();
+        screen.value = total;
+        operand1 = total;
+        operand2 = 0;
+        operator = '';
+      } 
+      break;
+    case 'Enter':
+      if (screen.value === "0" ){
         screen.value = 'ERR0R!!!';
       } else {
         operand2 = screen.value;
@@ -84,10 +105,6 @@ function takeInput(input) {
         operand2 = 0;
         operator = '';
       }
-      break;
-    case 'Enter':
-      // Work in progress (need help) //
-
       break;
     case '.':
       if (!screen.value.includes('.') && screen.value != '') {
@@ -113,17 +130,21 @@ function takeInput(input) {
       prepareCalc(input, screen.value);
       break;
     default: {
-      if (screen.value == operand1 && screen.value != '') {
-        screen.value = input;
-      } else {
-        screen.value = screen.value + input;
-      }
+        if (screen.value == operand1 && screen.value != '') {
+            screen.value = input;
+        } else {
+            screen.value = screen.value + input;
+          }
     }
   }
 }
 
 buttons.forEach((keys) => {
   keys.addEventListener('keydown', function (event) {
-    takeInput(event.key);
+    event.preventDefault();
+    let keypress = event.key 
+    if(numbers.indexOf(keypress) !== -1 || operators.indexOf(keypress) !== -1) {
+        takeInput(keypress);
+    }
   });
 });
