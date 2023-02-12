@@ -27,24 +27,27 @@ function operate() {
   }
 }
 
+function resetOperator(){
+  
+}
 function prepareCalc(buttonPress, screenValue) {
-  if (operator === '' || screen.value == '') {
+  if (operator === '' || screen.value === '') {
     operator = buttonPress;
-  } else {
+  } 
+  else {
     operand2 = screen.value;
     let total = operate();
-    screen.value = total;
-    operand1 = total;
+    screen.value = total.toString().slice(0, 6);
+    screenValue = total;
+    operand1 = screenValue;
     operand2 = 0;
     operator = buttonPress;
   }
-
   if (operand1 === 0) {
     operand1 = screenValue;
     screen.value = '';
   }
 }
-
 function takeInput(input) {
   switch (input) {
     case 'A/C':
@@ -83,7 +86,7 @@ function takeInput(input) {
       } else {
         operand2 = screen.value;
         let total = operate();
-        screen.value = total;
+        screen.value = total.toString().slice(0, 6);
         operand1 = total;
         operand2 = 0;
         operator = '';
@@ -111,24 +114,18 @@ function takeInput(input) {
       prepareCalc(input, screen.value);
       break;
     case '+':
-      prepareCalc(input, screen.value);
+      prepareCalc(input, screen.value);     
       break;
-    default: {
-      if (screen.value.length < 7) {
-        if (screen.value.slice(0, 2) == '0.' && input == 0) {
-          screen.value = screen.value.concat('', '0');
-        } else if (screen.value === '0') {
-          screen.value = input;
-        } else if (screen.value == operand1 && screen.value != '') {
-          screen.value = screen.value.concat('', input);
-        } else {
-          screen.value = screen.value + input;
-        }
+    default:
+      if (screen.value == operand1 && screen.value != '') {
+        screen.value = input;
+      } else {
+        screen.value = screen.value + input;
       }
       break;
     }
   }
-}
+
 
 buttons.forEach((button) => {
   button.addEventListener('click', function (event) {
