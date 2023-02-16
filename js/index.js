@@ -2,12 +2,12 @@ let calculator = document.getElementById('calculator');
 let buttons = Array.from(document.querySelectorAll('button'));
 let screen = document.getElementById('answer');
 let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-let operators = ['+', '-', '/', '*', '%', 'Backspace', 'Enter', 'Escape'];
+let operators = ['+', '-', '/', '*', '%'];
 let operand1 = 0;
 let operand2 = 0;
 let operator = '';
 
-const addition = (operand1, operand2) => +operand1 + +operand2;
+const addition = (operand1, operand2) => operand1 + operand2;
 const subtraction = (operand1, operand2) => operand1 - operand2;
 const multiplication = (operand1, operand2) => operand1 * operand2;
 const division = (operand1, operand2) => operand1 / operand2;
@@ -27,120 +27,114 @@ function operate() {
   }
 }
 
-function prepareCalc(buttonPress, screenValue) {
-  if (operator === '' || screen.value === '') {
-    operator = buttonPress;
-  } 
-  else {
-    operand2 = screen.value;
-    let total = operate();
-    screen.value = (Number.isInteger(total)) ? total : total.toFixed(6)
-    screenValue = total;
-    operand1 = screenValue;
-    operand2 = 0;
-    operator = buttonPress;
+
+function equals(){
+
+  let result = operate(operand1, operand2);
+  if(result === undefined || result === NaN || result === Infinity){
+    screen.value = "ERROR"
+  }else {
+    screen.value = result
+    operand1 = result
+    operand2 = 0
+    console.log(result);
   }
-  if (operand1 === 0) {
-    operand1 = screenValue;
-    screen.value = '';
-  }
+   
 }
-function takeInput(input) {
-  switch (input) {
-    case 'A/C':
-      operand1 = 0;
-      operand2 = 0;
-      operator = '';
-      screen.value = '';
-      break;
-    case 'Escape':
-      operand1 = 0;
-      operand2 = 0;
-      operator = '';
-      screen.value = '';
-      break;
-    case 'Back':
-      screen.value = screen.value.slice(0, -1);
-      break;
-    case 'Backspace':
-      screen.value = screen.value.slice(0, -1);
-      break;
-    case '=':
-      if (screen.value === '0') {
-        screen.value = 'ERR0R!!!';
-      } else {
-        operand2 = screen.value;
-        let total = operate();
-        screen.value = (Number.isInteger(total)) ? total : total.toFixed(6)
-        operand1 = total;
-        operand2 = 0;
-        operator = '';
-      }
-      break;
-    case 'Enter':
-      if (screen.value === '0') {
-        screen.value = 'ERR0R!!!';
-      } else {
-        operand2 = screen.value;
-        let total = operate();
-        screen.value = (Number.isInteger(total)) ? total : total.toFixed(6)
-        operand1 = total;
-        operand2 = 0;
-        operator = '';
-      }
-      break;
-    case '.':
-      if (!screen.value.includes('.') && screen.value != '') {
-        screen.value += '.';
-      }
-      break;
-    case '+/-':
-      screen.value = screen.value * -1;
-      break;
-    case '%':
-      screen.value = screen.value / 100;
-      screen.value = screen.value.slice(0, 6);
-      break;
-    case '/':
-      prepareCalc(input, screen.value);
-      break;
-    case '*':
-      prepareCalc(input, screen.value);
-      break;
-    case '-':
-      prepareCalc(input, screen.value);
-      break;
-    case '+':
-      prepareCalc(input, screen.value);     
-      break;
-    default:
-      if (screen.value == operand1 && screen.value != '') {
-        screen.value = input;
-      } else {
-        screen.value = screen.value + input;
-      }
+
+function operand(button){
+  numbers.forEach(number =>{
+    while(button === number){
+      screen.value += button 
       break;
     }
+    if(operator !==""){
+      operand2 = parseFloat(screen.value);
+      console.log(operand2);
+    }
+    else {
+      operand1 = parseFloat(screen.value)
+      console.log(operand1);
+    }
+  })
+}
+
+function clear(){
+  screen.value = ""
+  operand1 = 0;
+  operand2 = 0;
+  operator = ""
+}
+
+function back(){
+    console.log(screen.value);
+    screen.value = screen.value.slice(0, -1)
+    operand1 = operand1.toString().slice(0,-1)
+    operand1 = parseFloat(operand1)
+    operand2 = operand2.toString().slice(0,-1)
+    operand2 = parseFloat(operand2)
   }
 
 
-buttons.forEach((button) => {
-  button.addEventListener('click', function (event) {
-    event.preventDefault();
-    let buttonPress = event.target.innerText;
-    takeInput(buttonPress);
-  });
-});
+function opers(button){
+        if(operand2 !== 0){
+          let result = operate(operand1, operand2);
+          operand1 = result
+          operand2 = 0
+          
+        } if(operand2 === 0) {
+          operator = button
+          screen.value = ""
+        }
+        
+      }
 
-buttons.forEach((keys) => {
-  keys.addEventListener('keydown', function (event) {
-    event.preventDefault();
-    let keypress = event.key;
-    if (
-      numbers.indexOf(keypress) !== -1 ||
-      operators.indexOf(keypress) !== -1
-    ) {
-      takeInput(keypress);
+buttons.forEach(clicks=> {
+    clicks.addEventListener("click", event=>{
+      let click = event.target.value;
+      switch(click){
+        case("+/-"):
+          return screen.value = (screen.value * (-1))
+        case("%"):
+        return screen.value = (screen.value / 100)
+        case "C":
+          return clear()
+        case "B":
+          return back()
+        case "*":
+        case "-":
+        case "+":
+        case "/":
+          return opers(click);
+        case "=": 
+          return equals(operand1, operand2);  
+        default:
+         operand(click)
+          break;
+      }
+    }) 
+})
+
+buttons.forEach(keys=> {
+  keys.addEventListener("keyup", event=>{
+    let key = event.key;
+    switch(key){
+      case "Escape":
+        return clear()
+      case "Backspace":
+        return back()
+      case "*":
+      case "-":
+      case "+":
+      case "/":
+        return opers(key);
+      case "Enter":
+      return equals(operand1, operand2)
+      case "Alt": 
+        return equals(operand1, operand2);  
+      default:
+       operand(key)
+        break;
     }
-  });
-});
+  }) 
+})
